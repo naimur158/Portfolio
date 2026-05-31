@@ -347,6 +347,12 @@
     .v-info  { padding: 0.875rem 1.1rem; }
     .v-title { font-family:'Syne',sans-serif;font-size:0.875rem;font-weight:700;margin-bottom:0.25rem; }
     .v-cat   { font-size:0.75rem;color:var(--accent);font-weight:600; }
+    /* Real YouTube thumbnail support */
+    .v-thumb-img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.55s ease; }
+    .v-card:hover .v-thumb-img { transform:scale(1.07); }
+    /* Scrollable filter bar for 15 tabs */
+    .filter-bar { overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap !important;scrollbar-width:none;padding-bottom:4px; }
+    .filter-bar::-webkit-scrollbar { display:none; }
 
     /* VIDEO MODAL */
     #v-modal {
@@ -693,24 +699,34 @@
       </div>
       <div class="niches">
         <div class="niche-card rv">
-          <span class="niche-ico">🤖</span>
-          <div class="niche-title">Faceless YouTube Automation</div>
-          <div class="niche-desc">Full production for faceless channels — AI voiceover sync, stock footage layering, dynamic captions, motion text, and hooks engineered for maximum watch-time retention.</div>
+          <span class="niche-ico">🔍</span>
+          <div class="niche-title">True Crime &amp; Stories</div>
+          <div class="niche-desc">Gripping crime narratives — serial robbers, financial fraudsters, biker gangs, and cold-case mysteries edited with cinematic pacing that keeps viewers hooked to the final frame.</div>
         </div>
         <div class="niche-card rv d1">
-          <span class="niche-ico">💰</span>
-          <div class="niche-title">Finance &amp; Business Channels</div>
-          <div class="niche-desc">Clean, authoritative edits for money, investing, and entrepreneurship automation channels. Data overlays, stock charts, and professional graphics that build trust and credibility.</div>
+          <span class="niche-ico">🎬</span>
+          <div class="niche-title">Documentary &amp; History</div>
+          <div class="niche-desc">Long-form storytelling for history, war, military, and political documentaries. Archival footage integration, vintage color grades, and narrative structure that commands attention.</div>
         </div>
         <div class="niche-card rv d2">
-          <span class="niche-ico">🧠</span>
-          <div class="niche-title">Motivation &amp; Self-Improvement</div>
-          <div class="niche-desc">High-energy, emotionally charged edits for motivational automation. Cinematic b-roll, power transitions, epic soundscapes, and perfectly synced voiceover for viral impact.</div>
+          <span class="niche-ico">💰</span>
+          <div class="niche-title">Finance &amp; Business</div>
+          <div class="niche-desc">Authoritative edits for investment, gold IRA, and market analysis channels. Data overlays, stock chart integrations, and trust-building visuals that convert viewers into subscribers.</div>
         </div>
         <div class="niche-card rv d3">
-          <span class="niche-ico">📜</span>
-          <div class="niche-title">History &amp; Documentary Automation</div>
-          <div class="niche-desc">Atmospheric long-form edits for history, mystery, and documentary channels. Vintage color grades, archival footage integration, and narrative pacing that hooks viewers from the first second.</div>
+          <span class="niche-ico">🤖</span>
+          <div class="niche-title">Tech &amp; AI</div>
+          <div class="niche-desc">Futuristic edits for robotics, artificial intelligence, and emerging technology. Dynamic b-roll, sleek motion graphics, and fast-paced cutting that matches the pace of innovation.</div>
+        </div>
+        <div class="niche-card rv d1">
+          <span class="niche-ico">🏆</span>
+          <div class="niche-title">Sports &amp; Combat Sports</div>
+          <div class="niche-desc">High-energy edits across NBA, UFC, baseball, soccer, and hockey. Career retrospectives, franchise deep-dives, and match breakdowns built for maximum engagement.</div>
+        </div>
+        <div class="niche-card rv d2">
+          <span class="niche-ico">✈️</span>
+          <div class="niche-title">Travel &amp; Lifestyle</div>
+          <div class="niche-desc">Immersive travel content from Queenstown to Oslo — city guides, global destination countdowns, and architectural showcases with a cinematic wanderlust feel.</div>
         </div>
       </div>
     </div>
@@ -728,122 +744,601 @@
         <span class="label">My Work</span>
         <h2 class="section-h" style="margin-top:0.7rem;">Selected <span class="accent-t">Projects</span></h2>
         <p class="muted-t" style="margin-top:0.75rem;font-size:0.92rem;max-width:440px;line-height:1.7;">
-          YouTube automation edits across multiple niches. Click any card to watch.
+          42 videos across 14 niches — crime, documentary, finance, sports, tech, travel &amp; more. Click any to watch.
         </p>
       </div>
 
       <div class="filter-bar rv d1">
         <button class="f-tab on" onclick="filt('all',this)">All</button>
-        <button class="f-tab"    onclick="filt('faceless',this)">Faceless</button>
-        <button class="f-tab"    onclick="filt('finance',this)">Finance</button>
-        <button class="f-tab"    onclick="filt('motivation',this)">Motivation</button>
-        <button class="f-tab"    onclick="filt('history',this)">History</button>
+        <button class="f-tab" onclick="filt('crime',this)">🔍 Crime</button>
+        <button class="f-tab" onclick="filt('doc',this)">🎬 Documentary</button>
+        <button class="f-tab" onclick="filt('finance',this)">💰 Finance</button>
+        <button class="f-tab" onclick="filt('history',this)">⚔️ History</button>
+        <button class="f-tab" onclick="filt('military',this)">🛡️ Military</button>
+        <button class="f-tab" onclick="filt('nba',this)">🏀 NBA</button>
+        <button class="f-tab" onclick="filt('sports',this)">🏆 Sports</button>
+        <button class="f-tab" onclick="filt('tech',this)">🤖 Tech &amp; AI</button>
+        <button class="f-tab" onclick="filt('travel',this)">✈️ Travel</button>
+        <button class="f-tab" onclick="filt('ufc',this)">🥊 UFC</button>
+        <button class="f-tab" onclick="filt('celeb',this)">🎤 Celebrity</button>
+        <button class="f-tab" onclick="filt('anime',this)">🎌 Anime</button>
+        <button class="f-tab" onclick="filt('talking',this)">🎙️ Talking Head</button>
+        <button class="f-tab" onclick="filt('gaming',this)">🎮 Gaming</button>
       </div>
 
       <div class="port-grid" id="pg-grid">
 
-        <!-- CARD 1 — Faceless -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_1 with your YouTube video ID -->
-        <div class="v-card rv" data-cat="faceless">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_1')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#050d1a,#0d1f3c);">🤖</div>
+        <div class="v-card rv" data-cat="crime">
+          <div class="v-thumb" onclick="openVid('BgW_Qi2sQtQ')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/BgW_Qi2sQtQ/hqdefault.jpg" alt="No Job. No Suit. $153 Million — Who Is BNF?" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">AI Minds — Faceless Channel Edit</div>
-              <div class="v-ov-meta">12:45 &middot; Faceless Automation</div>
+              <div class="v-ov-title">No Job. No Suit. $153 Million — Who Is BNF?</div>
+              <div class="v-ov-meta">🔍 True Crime</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">AI Minds — Faceless Channel Edit</div>
-            <div class="v-cat">Faceless Automation &middot; 12:45</div>
+            <div class="v-title">No Job. No Suit. $153 Million — Who Is BNF?</div>
+            <div class="v-cat">🔍 True Crime</div>
           </div>
         </div>
 
-        <!-- CARD 2 — Finance -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_2 with your YouTube video ID -->
+        <div class="v-card rv d1" data-cat="crime">
+          <div class="v-thumb" onclick="openVid('rbFPTBB8E44')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/rbFPTBB8E44/hqdefault.jpg" alt="Serial Robber Decided to Go For the Getaway" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Serial Robber Decided to Go For the Getaway</div>
+              <div class="v-ov-meta">🔍 True Crime</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Serial Robber Decided to Go For the Getaway</div>
+            <div class="v-cat">🔍 True Crime</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="crime">
+          <div class="v-thumb" onclick="openVid('fy8Rfdk7Dk4')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/fy8Rfdk7Dk4/hqdefault.jpg" alt="The Alexander Baker Story" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">The Alexander Baker Story</div>
+              <div class="v-ov-meta">🔍 True Crime</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">The Alexander Baker Story</div>
+            <div class="v-cat">🔍 True Crime</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="doc">
+          <div class="v-thumb" onclick="openVid('PAjPeYsQ80k')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/PAjPeYsQ80k/hqdefault.jpg" alt="The Day Lamborghini Fought Back Against Ferrari!" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">The Day Lamborghini Fought Back Against Ferrari!</div>
+              <div class="v-ov-meta">🎬 Documentary</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">The Day Lamborghini Fought Back Against Ferrari!</div>
+            <div class="v-cat">🎬 Documentary</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="doc">
+          <div class="v-thumb" onclick="openVid('1HdFmFIzOhY')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/1HdFmFIzOhY/hqdefault.jpg" alt="A Nigerian Nightmare | General Abacha" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">A Nigerian Nightmare | General Abacha</div>
+              <div class="v-ov-meta">🎬 Documentary</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">A Nigerian Nightmare | General Abacha</div>
+            <div class="v-cat">🎬 Documentary</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="doc">
+          <div class="v-thumb" onclick="openVid('vZJAtClpsA4')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/vZJAtClpsA4/hqdefault.jpg" alt="Documentary Cinematic Edit" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Documentary Cinematic Edit</div>
+              <div class="v-ov-meta">🎬 Documentary</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Documentary Cinematic Edit</div>
+            <div class="v-cat">🎬 Documentary</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="finance">
+          <div class="v-thumb" onclick="openVid('Qc7H9m4-ZIU')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/Qc7H9m4-ZIU/hqdefault.jpg" alt="Goldco Review — Legit or Scam? (2025)" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Goldco Review — Legit or Scam? (2025)</div>
+              <div class="v-ov-meta">💰 Finance</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Goldco Review — Legit or Scam? (2025)</div>
+            <div class="v-cat">💰 Finance</div>
+          </div>
+        </div>
+
         <div class="v-card rv d1" data-cat="finance">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_2')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#0a1a0a,#0d2b12);">💰</div>
+          <div class="v-thumb" onclick="openVid('_3r3lDh5m74')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/_3r3lDh5m74/hqdefault.jpg" alt="Why You Should Consider a Gold IRA in 2025" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">How the Rich Think — Finance Edit</div>
-              <div class="v-ov-meta">15:20 &middot; Finance &amp; Business</div>
+              <div class="v-ov-title">Why You Should Consider a Gold IRA in 2025</div>
+              <div class="v-ov-meta">💰 Finance</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">How the Rich Think — Finance Edit</div>
-            <div class="v-cat">Finance &amp; Business &middot; 15:20</div>
+            <div class="v-title">Why You Should Consider a Gold IRA in 2025</div>
+            <div class="v-cat">💰 Finance</div>
           </div>
         </div>
 
-        <!-- CARD 3 — Motivation -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_3 with your YouTube video ID -->
-        <div class="v-card rv d2" data-cat="motivation">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_3')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#1a0800,#2e1500);">🧠</div>
+        <div class="v-card rv d2" data-cat="history">
+          <div class="v-thumb" onclick="openVid('RoJAKMcf6-g')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/RoJAKMcf6-g/hqdefault.jpg" alt="Why We Are Heading Into World War 3?" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">No Excuses — Motivation Edit</div>
-              <div class="v-ov-meta">10:08 &middot; Motivation</div>
+              <div class="v-ov-title">Why We Are Heading Into World War 3?</div>
+              <div class="v-ov-meta">⚔️ History &amp; War</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">No Excuses — Motivation Edit</div>
-            <div class="v-cat">Motivation &middot; 10:08</div>
+            <div class="v-title">Why We Are Heading Into World War 3?</div>
+            <div class="v-cat">⚔️ History &amp; War</div>
           </div>
         </div>
 
-        <!-- CARD 4 — History -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_4 with your YouTube video ID -->
         <div class="v-card rv" data-cat="history">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_4')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#141008,#281f10);">📜</div>
+          <div class="v-thumb" onclick="openVid('zgddXb59wKk')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/zgddXb59wKk/hqdefault.jpg" alt="What If Civil War Erupts Across Europe?" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">Fall of Rome — Documentary Edit</div>
-              <div class="v-ov-meta">22:50 &middot; History &amp; Documentary</div>
+              <div class="v-ov-title">What If Civil War Erupts Across Europe?</div>
+              <div class="v-ov-meta">⚔️ History &amp; War</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">Fall of Rome — Documentary Edit</div>
-            <div class="v-cat">History &amp; Documentary &middot; 22:50</div>
+            <div class="v-title">What If Civil War Erupts Across Europe?</div>
+            <div class="v-cat">⚔️ History &amp; War</div>
           </div>
         </div>
 
-        <!-- CARD 5 — Faceless -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_5 with your YouTube video ID -->
-        <div class="v-card rv d1" data-cat="faceless">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_5')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#08001a,#12003a);">🔮</div>
+        <div class="v-card rv d1" data-cat="history">
+          <div class="v-thumb" onclick="openVid('0z2DDFI4FXU')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/0z2DDFI4FXU/hqdefault.jpg" alt="How to Prep for Nuclear War — Doomsday Broadcast" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">Dark Secrets — Faceless Mystery</div>
-              <div class="v-ov-meta">18:00 &middot; Faceless Automation</div>
+              <div class="v-ov-title">How to Prep for Nuclear War — Doomsday Broadcast</div>
+              <div class="v-ov-meta">⚔️ History &amp; War</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">Dark Secrets — Faceless Mystery</div>
-            <div class="v-cat">Faceless Automation &middot; 18:00</div>
+            <div class="v-title">How to Prep for Nuclear War — Doomsday Broadcast</div>
+            <div class="v-cat">⚔️ History &amp; War</div>
           </div>
         </div>
 
-        <!-- CARD 6 — Finance -->
-        <!-- YOUTUBE LINK HERE: Replace VIDEO_ID_6 with your YouTube video ID -->
-        <div class="v-card rv d2" data-cat="finance">
-          <div class="v-thumb" onclick="openVid('VIDEO_ID_6')">
-            <div class="v-bg" style="background:linear-gradient(135deg,#040d14,#081c28);">📈</div>
+        <div class="v-card rv d2" data-cat="military">
+          <div class="v-thumb" onclick="openVid('Z863j4hLJVw')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/Z863j4hLJVw/hqdefault.jpg" alt="SR-71 Blackbird: Cold War Icon to Hypersonic Future" loading="lazy"/>
             <div class="v-overlay">
-              <div class="v-ov-title">Passive Income Blueprint</div>
-              <div class="v-ov-meta">19:30 &middot; Finance &amp; Business</div>
+              <div class="v-ov-title">SR-71 Blackbird: Cold War Icon to Hypersonic Future</div>
+              <div class="v-ov-meta">🛡️ Military</div>
               <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
             </div>
           </div>
           <div class="v-info">
-            <div class="v-title">Passive Income Blueprint</div>
-            <div class="v-cat">Finance &amp; Business &middot; 19:30</div>
+            <div class="v-title">SR-71 Blackbird: Cold War Icon to Hypersonic Future</div>
+            <div class="v-cat">🛡️ Military</div>
           </div>
         </div>
 
+        <div class="v-card rv" data-cat="military">
+          <div class="v-thumb" onclick="openVid('AALcXC1Ah1c')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/AALcXC1Ah1c/hqdefault.jpg" alt="Anduril's Roadrunner Drone Solves a Huge Problem" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Anduril's Roadrunner Drone Solves a Huge Problem</div>
+              <div class="v-ov-meta">🛡️ Military</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Anduril's Roadrunner Drone Solves a Huge Problem</div>
+            <div class="v-cat">🛡️ Military</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="nba">
+          <div class="v-thumb" onclick="openVid('5BDS1qcKCbA')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/5BDS1qcKCbA/hqdefault.jpg" alt="Stephen Curry &amp; the $8.8 Billion Empire" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Stephen Curry &amp; the $8.8 Billion Empire</div>
+              <div class="v-ov-meta">🏀 NBA</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Stephen Curry &amp; the $8.8 Billion Empire</div>
+            <div class="v-cat">🏀 NBA</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="nba">
+          <div class="v-thumb" onclick="openVid('wEDksZiO4yY')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/wEDksZiO4yY/hqdefault.jpg" alt="How Good Was 2018 MVP James Harden Actually?" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">How Good Was 2018 MVP James Harden Actually?</div>
+              <div class="v-ov-meta">🏀 NBA</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">How Good Was 2018 MVP James Harden Actually?</div>
+            <div class="v-cat">🏀 NBA</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="nba">
+          <div class="v-thumb" onclick="openVid('buifF5qqt4w')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/buifF5qqt4w/hqdefault.jpg" alt="Portland Trail Blazers' History of What-Ifs" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Portland Trail Blazers' History of What-Ifs</div>
+              <div class="v-ov-meta">🏀 NBA</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Portland Trail Blazers' History of What-Ifs</div>
+            <div class="v-cat">🏀 NBA</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="sports">
+          <div class="v-thumb" onclick="openVid('uPYeYRPM2F4')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/uPYeYRPM2F4/hqdefault.jpg" alt="Why Babe Ruth WOULDN'T Survive Modern Baseball" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Why Babe Ruth WOULDN'T Survive Modern Baseball</div>
+              <div class="v-ov-meta">🏆 Sports</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Why Babe Ruth WOULDN'T Survive Modern Baseball</div>
+            <div class="v-cat">🏆 Sports</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="sports">
+          <div class="v-thumb" onclick="openVid('pnrO8hqGRpA')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/pnrO8hqGRpA/hqdefault.jpg" alt="Patrick Kane's CAREER Nearly Ended Over THIS" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Patrick Kane's CAREER Nearly Ended Over THIS</div>
+              <div class="v-ov-meta">🏆 Sports</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Patrick Kane's CAREER Nearly Ended Over THIS</div>
+            <div class="v-cat">🏆 Sports</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="sports">
+          <div class="v-thumb" onclick="openVid('EKhVzGFqLSk')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/EKhVzGFqLSk/hqdefault.jpg" alt="Joshua Zirkzee: From Bayern Munich to Man United" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Joshua Zirkzee: From Bayern Munich to Man United</div>
+              <div class="v-ov-meta">🏆 Sports</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Joshua Zirkzee: From Bayern Munich to Man United</div>
+            <div class="v-cat">🏆 Sports</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="tech">
+          <div class="v-thumb" onclick="openVid('kPMIWeW4yOU')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/kPMIWeW4yOU/hqdefault.jpg" alt="What Makes Unitree B2-W the Most POWERFUL Robot?" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">What Makes Unitree B2-W the Most POWERFUL Robot?</div>
+              <div class="v-ov-meta">🤖 Tech &amp; AI</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">What Makes Unitree B2-W the Most POWERFUL Robot?</div>
+            <div class="v-cat">🤖 Tech &amp; AI</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="tech">
+          <div class="v-thumb" onclick="openVid('M8mPfm7Q88M')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/M8mPfm7Q88M/hqdefault.jpg" alt="The Creepiest Robot Ever! ProtoClone Is Too Real!" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">The Creepiest Robot Ever! ProtoClone Is Too Real!</div>
+              <div class="v-ov-meta">🤖 Tech &amp; AI</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">The Creepiest Robot Ever! ProtoClone Is Too Real!</div>
+            <div class="v-cat">🤖 Tech &amp; AI</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="tech">
+          <div class="v-thumb" onclick="openVid('-6WJeGEHsBM')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/-6WJeGEHsBM/hqdefault.jpg" alt="Next-Gen AI Technology — Deep Dive Edit" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Next-Gen AI Technology — Deep Dive Edit</div>
+              <div class="v-ov-meta">🤖 Tech &amp; AI</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Next-Gen AI Technology — Deep Dive Edit</div>
+            <div class="v-cat">🤖 Tech &amp; AI</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="travel">
+          <div class="v-thumb" onclick="openVid('ERR8lxBevQQ')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/ERR8lxBevQQ/hqdefault.jpg" alt="Jeddah Tower: Race to Build the World's Tallest" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Jeddah Tower: Race to Build the World's Tallest</div>
+              <div class="v-ov-meta">✈️ Travel</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Jeddah Tower: Race to Build the World's Tallest</div>
+            <div class="v-cat">✈️ Travel</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="travel">
+          <div class="v-thumb" onclick="openVid('40W27HZCcso')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/40W27HZCcso/hqdefault.jpg" alt="Top 15 Countries to Visit in 2025" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Top 15 Countries to Visit in 2025</div>
+              <div class="v-ov-meta">✈️ Travel</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Top 15 Countries to Visit in 2025</div>
+            <div class="v-cat">✈️ Travel</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="travel">
+          <div class="v-thumb" onclick="openVid('tdgWEEOgdrU')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/tdgWEEOgdrU/hqdefault.jpg" alt="Top 10 MUST-SEE Travel Destinations Worldwide" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Top 10 MUST-SEE Travel Destinations Worldwide</div>
+              <div class="v-ov-meta">✈️ Travel</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Top 10 MUST-SEE Travel Destinations Worldwide</div>
+            <div class="v-cat">✈️ Travel</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="ufc">
+          <div class="v-thumb" onclick="openVid('KTCQFKwXl_w')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/KTCQFKwXl_w/hqdefault.jpg" alt="Weight Cuts Are KILLING Fighters: UFC Legends Speak" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Weight Cuts Are KILLING Fighters: UFC Legends Speak</div>
+              <div class="v-ov-meta">🥊 UFC</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Weight Cuts Are KILLING Fighters: UFC Legends Speak</div>
+            <div class="v-cat">🥊 UFC</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="ufc">
+          <div class="v-thumb" onclick="openVid('BY8WRRJWIRg')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/BY8WRRJWIRg/hqdefault.jpg" alt="The Rise &amp; Fall — UFC Career Breakdown" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">The Rise &amp; Fall — UFC Career Breakdown</div>
+              <div class="v-ov-meta">🥊 UFC</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">The Rise &amp; Fall — UFC Career Breakdown</div>
+            <div class="v-cat">🥊 UFC</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="ufc">
+          <div class="v-thumb" onclick="openVid('YvNSYNoecRs')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/YvNSYNoecRs/hqdefault.jpg" alt="How This Crip Became A UFC Champion" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">How This Crip Became A UFC Champion</div>
+              <div class="v-ov-meta">🥊 UFC</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">How This Crip Became A UFC Champion</div>
+            <div class="v-cat">🥊 UFC</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="celeb">
+          <div class="v-thumb" onclick="openVid('kqSz25_tLhw')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/kqSz25_tLhw/hqdefault.jpg" alt="BOMBSHELL Katt Williams Revelations About Clive Davis" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">BOMBSHELL Katt Williams Revelations About Clive Davis</div>
+              <div class="v-ov-meta">🎤 Celebrity</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">BOMBSHELL Katt Williams Revelations About Clive Davis</div>
+            <div class="v-cat">🎤 Celebrity</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="celeb">
+          <div class="v-thumb" onclick="openVid('ysmtpWma4_o')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/ysmtpWma4_o/hqdefault.jpg" alt="Young M.A RETURNS: Health Scares &amp; The Truth!" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Young M.A RETURNS: Health Scares &amp; The Truth!</div>
+              <div class="v-ov-meta">🎤 Celebrity</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Young M.A RETURNS: Health Scares &amp; The Truth!</div>
+            <div class="v-cat">🎤 Celebrity</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="anime">
+          <div class="v-thumb" onclick="openVid('OVRUKU7AJ9A')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/OVRUKU7AJ9A/hqdefault.jpg" alt="Nickelodeon Is Shutting Down?!" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Nickelodeon Is Shutting Down?!</div>
+              <div class="v-ov-meta">🎌 Anime</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Nickelodeon Is Shutting Down?!</div>
+            <div class="v-cat">🎌 Anime</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="anime">
+          <div class="v-thumb" onclick="openVid('XZMmqvU8k2Q')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/XZMmqvU8k2Q/hqdefault.jpg" alt="Did You Spot These Hidden Messages in The Simpsons?" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Did You Spot These Hidden Messages in The Simpsons?</div>
+              <div class="v-ov-meta">🎌 Anime</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Did You Spot These Hidden Messages in The Simpsons?</div>
+            <div class="v-cat">🎌 Anime</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="anime">
+          <div class="v-thumb" onclick="openVid('U7nV52tMFaA')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/U7nV52tMFaA/hqdefault.jpg" alt="Gravity Falls Mysteries That Still Make No Sense" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Gravity Falls Mysteries That Still Make No Sense</div>
+              <div class="v-ov-meta">🎌 Anime</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Gravity Falls Mysteries That Still Make No Sense</div>
+            <div class="v-cat">🎌 Anime</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="talking">
+          <div class="v-thumb" onclick="openVid('AbS684hHq0c')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/AbS684hHq0c/hqdefault.jpg" alt="The Franklin Expedition — Talking Head Edit" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">The Franklin Expedition — Talking Head Edit</div>
+              <div class="v-ov-meta">🎙️ Talking Head</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">The Franklin Expedition — Talking Head Edit</div>
+            <div class="v-cat">🎙️ Talking Head</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="talking">
+          <div class="v-thumb" onclick="openVid('LIWx7N5-hZE')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/LIWx7N5-hZE/hqdefault.jpg" alt="Documentary Talking Head Showcase" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Documentary Talking Head Showcase</div>
+              <div class="v-ov-meta">🎙️ Talking Head</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Documentary Talking Head Showcase</div>
+            <div class="v-cat">🎙️ Talking Head</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d2" data-cat="gaming">
+          <div class="v-thumb" onclick="openVid('ATu81NFZjhI')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/ATu81NFZjhI/hqdefault.jpg" alt="Why Are GTA Games So Popular?" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Why Are GTA Games So Popular?</div>
+              <div class="v-ov-meta">🎮 Gaming</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Why Are GTA Games So Popular?</div>
+            <div class="v-cat">🎮 Gaming</div>
+          </div>
+        </div>
+
+        <div class="v-card rv" data-cat="gaming">
+          <div class="v-thumb" onclick="openVid('Y0vtwZKKXh8')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/Y0vtwZKKXh8/hqdefault.jpg" alt="Can GTA 6 Surpass Fortnite's Peak?" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Can GTA 6 Surpass Fortnite's Peak?</div>
+              <div class="v-ov-meta">🎮 Gaming</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Can GTA 6 Surpass Fortnite's Peak?</div>
+            <div class="v-cat">🎮 Gaming</div>
+          </div>
+        </div>
+
+        <div class="v-card rv d1" data-cat="gaming">
+          <div class="v-thumb" onclick="openVid('q9Q12oE3HKE')">
+            <img class="v-thumb-img" src="https://img.youtube.com/vi/q9Q12oE3HKE/hqdefault.jpg" alt="Gaming Deep Dive — Breakdown Edit" loading="lazy"/>
+            <div class="v-overlay">
+              <div class="v-ov-title">Gaming Deep Dive — Breakdown Edit</div>
+              <div class="v-ov-meta">🎮 Gaming</div>
+              <div class="v-ov-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></div>
+            </div>
+          </div>
+          <div class="v-info">
+            <div class="v-title">Gaming Deep Dive — Breakdown Edit</div>
+            <div class="v-cat">🎮 Gaming</div>
+          </div>
+        </div>
+
+      </div>
       </div>
     </div>
   </div><!-- END PORTFOLIO -->
