@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070709" />
   <title>NR Creation — Premium Video Editing</title>
   <meta name="description" content="Welcome to NR Creation. We transform raw footage into high-retention cinematic stories for YouTube, documentaries, and brands. View our portfolio now." />
   <meta name="keywords" content="nrcreation, nr creation, video editor, cinematic video editing, portfolio, creative video agency" />
@@ -533,9 +534,277 @@
     .scroll-hint { display:inline-flex;align-items:center;gap:12px;font-size:0.75rem;color:var(--text-d);letter-spacing:0.1em;text-transform:uppercase;margin-top:4rem; }
     .scroll-hint::before { content:'';width:36px;height:1px;background:var(--text-d); }
     select option { background:#0d0d10;color:var(--text); }
+
+    /* ================================================
+       3D BACKGROUND CANVAS (Three.js)
+    ================================================ */
+    #bg3d {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%; /* tracks iOS dynamic toolbar, unlike 100vh */
+      z-index: 0; pointer-events: none; display: block;
+    }
+
+    /* ================================================
+       3D TILT CARDS + GLARE
+    ================================================ */
+    .blob { will-change: transform; }
+
+    .tilt-card {
+      position: relative;
+      transition: transform 0.18s cubic-bezier(0.2,0.8,0.3,1),
+                  border-color 0.35s, box-shadow 0.35s;
+    }
+    .tilt-card:hover { transform: translateY(-6px); }
+
+    .tilt-glare {
+      position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; opacity: 0; transition: opacity 0.3s;
+      z-index: 5;
+    }
+
+    /* ================================================
+       3D DEPTH ENTRANCES — cards stand up in 3D space
+    ================================================ */
+    .v-card.rv, .niche-card.rv, .price-card.rv,
+    .bento.rv, .reel-wrap.rv, .testi-wrap.rv {
+      transform: perspective(1000px) rotateX(14deg) translateY(36px) scale(0.97);
+      transform-origin: 50% 100%;
+    }
+    .v-card.rv.in, .niche-card.rv.in, .price-card.rv.in,
+    .bento.rv.in, .reel-wrap.rv.in, .testi-wrap.rv.in {
+      transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .v-card.rv, .niche-card.rv, .price-card.rv,
+      .bento.rv, .reel-wrap.rv, .testi-wrap.rv { transform: none; }
+    }
+
+    /* ================================================
+       CINEMATIC INTRO — UNIVERSAL FILM LEADER
+    ================================================ */
+    html.intro-lock, html.intro-lock body { overflow: hidden; }
+
+    #intro {
+      position: fixed; inset: 0; z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      cursor: none;
+      /* Failsafe: if JS dies mid-sequence, the overlay removes itself */
+      animation: introFailsafe 0.8s 6.5s forwards;
+    }
+    @keyframes introFailsafe { to { opacity: 0; visibility: hidden; } }
+
+    .intro-bar {
+      position: absolute; left: 0; right: 0; height: 51vh;
+      background: #050506; z-index: 1;
+      transition: transform 0.95s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .intro-bar-t { top: 0; }
+    .intro-bar-b { bottom: 0; }
+    #intro.open .intro-bar-t { transform: translateY(-102%); }
+    #intro.open .intro-bar-b { transform: translateY(102%); }
+    #intro.open { pointer-events: none; }
+
+    .intro-scan {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.55;
+      background: repeating-linear-gradient(0deg,
+        rgba(255,255,255,0.028) 0 1px, transparent 1px 3px);
+    }
+
+    .intro-leader {
+      position: relative; z-index: 3;
+      width: min(46vmin, 340px); aspect-ratio: 1;
+    }
+    .intro-leader svg { width: 100%; height: 100%; display: block; }
+    .ld-line   { stroke: rgba(255,255,255,0.16); stroke-width: 1; }
+    .ld-circle { fill: none; stroke: rgba(255,255,255,0.22); stroke-width: 1.5; }
+
+    .leader-num {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(5rem, 18vmin, 8.5rem); color: var(--text);
+      text-shadow: 0 0 70px rgba(186,255,41,0.35);
+    }
+
+    .intro-tag {
+      position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%);
+      z-index: 3; white-space: nowrap;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.3em; color: var(--text-m); text-transform: uppercase;
+      animation: tagFlicker 0.7s steps(2) infinite;
+    }
+    @keyframes tagFlicker { 50% { opacity: 0.4; } }
+
+    .intro-skip {
+      position: absolute; top: 6vh; right: 6vw; z-index: 3;
+      font-size: 10px; letter-spacing: 0.25em; color: var(--text-d);
+      text-transform: uppercase; font-family: 'DM Sans', sans-serif;
+    }
+
+    .intro-flash {
+      position: absolute; inset: 0; background: #fff;
+      opacity: 0; z-index: 4; pointer-events: none;
+    }
+    #intro.flash .intro-flash { animation: flashPop 0.18s ease-out; }
+    @keyframes flashPop { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+
+    #intro.fading .intro-leader,
+    #intro.fading .intro-tag,
+    #intro.fading .intro-skip { opacity: 0; transition: opacity 0.3s; }
+
+    /* ================================================
+       HERO JUMP-CUT ENTRANCE + RGB GLITCH
+    ================================================ */
+    .hero-h .cut { display: inline-block; opacity: 0; }
+    body.played .hero-h .cut {
+      animation: cutIn 0.36s cubic-bezier(0.22, 0.9, 0.3, 1) forwards;
+    }
+    body.played .hero-h .cut:nth-of-type(1) { animation-delay: 0.22s; }
+    body.played .hero-h .cut:nth-of-type(2) { animation-delay: 0.36s; }
+    body.played .hero-h .cut:nth-of-type(3) { animation-delay: 0.50s; }
+    body.played .hero-h .cut:nth-of-type(4) { animation-delay: 0.64s; }
+    @keyframes cutIn {
+      0%   { opacity: 0; transform: scale(1.07) translateY(8px); filter: blur(7px) brightness(2.2); }
+      55%  { opacity: 1; transform: scale(0.992); filter: blur(0) brightness(1.5); }
+      100% { opacity: 1; transform: scale(1); filter: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-h .cut { opacity: 1 !important; animation: none !important; }
+    }
+
+    .glitch { position: relative; display: inline-block; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute; left: 0; top: 0; width: 100%;
+      opacity: 0; pointer-events: none;
+    }
+    body.played .glitch::before { color: #ff2bd1; animation: glA 4.6s 1.4s infinite; }
+    body.played .glitch::after  { color: #2bd9ff; animation: glB 4.6s 1.4s infinite; }
+    @keyframes glA {
+      0%, 90% { opacity: 0; transform: none; }
+      91% { opacity: 0.8; transform: translate(-5px, 2px);  clip-path: inset(8% 0 58% 0); }
+      93% { opacity: 0.8; transform: translate(4px, -2px);  clip-path: inset(62% 0 8% 0); }
+      95% { opacity: 0.8; transform: translate(-3px, 1px);  clip-path: inset(32% 0 38% 0); }
+      96%, 100% { opacity: 0; transform: none; }
+    }
+    @keyframes glB {
+      0%, 90% { opacity: 0; transform: none; }
+      91% { opacity: 0.8; transform: translate(5px, -2px);  clip-path: inset(55% 0 12% 0); }
+      93% { opacity: 0.8; transform: translate(-4px, 2px);  clip-path: inset(10% 0 64% 0); }
+      95% { opacity: 0.8; transform: translate(3px, -1px);  clip-path: inset(40% 0 30% 0); }
+      96%, 100% { opacity: 0; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .glitch::before, .glitch::after { animation: none !important; }
+    }
+
+    /* ================================================
+       CAMERA HUD (hero overlay)
+    ================================================ */
+    .hud {
+      position: absolute; inset: 88px 2rem 2.2rem;
+      pointer-events: none; z-index: 2;
+      font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+      font-size: 10px; letter-spacing: 0.18em;
+      color: var(--text-m); text-transform: uppercase;
+    }
+    .hud > div { position: absolute; display: flex; gap: 8px; align-items: center; }
+    .hud-tl { top: 0; left: 0; }
+    .hud-tr { top: 0; right: 0; }
+    .hud-bl { bottom: 0; left: 0; }
+    .hud-br { bottom: 0; right: 0; }
+    .rec-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #ff3b30;
+      box-shadow: 0 0 10px rgba(255,59,48,0.8);
+      animation: blink 1.4s steps(2) infinite;
+    }
+    .hud-corner { position: absolute; width: 16px; height: 16px; border: 1.5px solid rgba(186,255,41,0.38); }
+    .hud-corner.c1 { top: 22px; left: 0;  border-right: none; border-bottom: none; }
+    .hud-corner.c2 { top: 22px; right: 0; border-left: none;  border-bottom: none; }
+    .hud-corner.c3 { bottom: 22px; left: 0;  border-right: none; border-top: none; }
+    .hud-corner.c4 { bottom: 22px; right: 0; border-left: none;  border-top: none; }
+    @media (max-width: 768px) { .hud { display: none; } }
+
+    /* ================================================
+       FILM-CUT PAGE TRANSITION
+    ================================================ */
+    #cutfx {
+      position: fixed; inset: 0; background: #000;
+      opacity: 0; pointer-events: none; z-index: 800;
+    }
+    #cutfx.go { animation: cutBlink 0.16s steps(2); }
+    @keyframes cutBlink { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+    /* ================================================
+       MOBILE OPTIMIZATION
+    ================================================ */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Hero fills the *small* dynamic viewport on iOS/Android,
+       so the headline never hides behind the browser toolbar */
+    @supports (height: 100svh) {
+      #hero { min-height: 100svh; }
+    }
+
+    @media (max-width: 768px) {
+      /* iOS auto-zooms into inputs below 16px — pin them at 16px */
+      .f-field input, .f-field textarea, .f-field select { font-size: 16px; }
+
+      /* Lighter GPU load from the glow blobs on phones */
+      .blob { filter: blur(60px); opacity: 0.45; }
+
+      /* Bigger touch targets for filter tabs */
+      .f-tab { padding: 0.55rem 1.2rem; }
+
+      /* Touch feedback — phones have no hover */
+      .btn-p:active, .btn-s:active, .f-tab:active,
+      .btn-fiver:active, .btn-upwk:active,
+      .btn-price-p:active, .btn-price-s:active,
+      .filter-arrow:active, .sl-btn:active { transform: scale(0.96); }
+      .v-card:active, .niche-card:active, .price-card:active { transform: scale(0.985); }
+
+      .scroll-hint { margin-top: 2.5rem; }
+    }
+
+    @media (max-width: 520px) {
+      /* More content width + tighter rhythm on small phones */
+      .wrap { padding: 0 1.25rem; }
+      .sec-pad { padding: 3.5rem 0; }
+      .port-pg, .price-pg, .contact-pg { padding: 96px 0 56px; }
+      .testi-card { padding: 1.5rem; }
+
+      /* Stack the footer */
+      #foot { flex-direction: column; gap: 1rem; text-align: center; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- ========= 3D BACKGROUND CANVAS ========= -->
+  <canvas id="bg3d" aria-hidden="true"></canvas>
+
+  <!-- ========= CINEMATIC INTRO — FILM LEADER COUNTDOWN ========= -->
+  <div id="intro" aria-hidden="true">
+    <div class="intro-bar intro-bar-t"></div>
+    <div class="intro-bar intro-bar-b"></div>
+    <div class="intro-scan"></div>
+    <div class="intro-leader">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <line class="ld-line" x1="100" y1="0" x2="100" y2="200"/>
+        <line class="ld-line" x1="0" y1="100" x2="200" y2="100"/>
+        <circle class="ld-circle" cx="100" cy="100" r="78"/>
+        <circle class="ld-circle" cx="100" cy="100" r="58"/>
+        <path id="ld-sweep" d="" fill="rgba(186,255,41,0.13)"/>
+      </svg>
+      <div class="leader-num" id="ld-num">3</div>
+    </div>
+    <div class="intro-tag">NR Creation &mdash; Picture Start</div>
+    <div class="intro-skip">Click to skip</div>
+    <div class="intro-flash"></div>
+  </div>
+
+  <!-- ========= FILM-CUT PAGE TRANSITION ========= -->
+  <div id="cutfx" aria-hidden="true"></div>
 
   <!-- ========= CUSTOM CURSOR ========= -->
   <div id="c-dot"></div>
@@ -646,16 +915,28 @@
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
 
+      <!-- CAMERA HUD OVERLAY -->
+      <div class="hud" aria-hidden="true">
+        <div class="hud-tl"><span class="rec-dot"></span>REC <span id="hud-tc">00:00:00:00</span></div>
+        <div class="hud-tr">4K &bull; 23.976 FPS</div>
+        <div class="hud-bl">A001_C012_NRCREATION</div>
+        <div class="hud-br">ISO 800 &bull; &fnof;/1.8</div>
+        <span class="hud-corner c1"></span>
+        <span class="hud-corner c2"></span>
+        <span class="hud-corner c3"></span>
+        <span class="hud-corner c4"></span>
+      </div>
+
       <div class="hero-badge rv">
         <div class="dot"></div>
         <span>Available for New Projects</span>
       </div>
 
       <h1 class="hero-h rv d1">
-        Transforming<br>
-        Raw Footage<br>
-        into <span class="accent-t">Cinematic</span><br>
-        <em style="color:var(--text-m);font-style:italic;">Stories.</em>
+        <span class="cut">Transforming</span><br>
+        <span class="cut">Raw Footage</span><br>
+        <span class="cut">into <span class="accent-t glitch" data-text="Cinematic">Cinematic</span></span><br>
+        <span class="cut"><em style="color:var(--text-m);font-style:italic;">Stories.</em></span>
       </h1>
 
       <p class="rv d2" style="font-size:clamp(0.95rem,1.8vw,1.1rem);color:var(--text-m);max-width:460px;line-height:1.75;margin-top:1.75rem;font-weight:300;">
@@ -684,13 +965,9 @@
         <span class="label">Showreel</span>
       </div>
       <div class="reel-wrap rv d1">
-        <!--
-          YOUTUBE LINK HERE ↓
-          Replace YOUR_SHOWREEL_VIDEO_ID with your YouTube video ID.
-          e.g. https://youtu.be/dQw4w9WgXcQ  →  use  dQw4w9WgXcQ
-        -->
+        <!-- NR Creation Official Showreel — https://youtu.be/G23SbiMNPg4 -->
         <iframe
-          src="https://www.youtube.com/embed/YOUR_SHOWREEL_VIDEO_ID?rel=0&modestbranding=1&showinfo=0"
+          src="https://www.youtube.com/embed/G23SbiMNPg4?rel=0&modestbranding=1&showinfo=0"
           title="NR Creation Showreel"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
@@ -1664,6 +1941,7 @@
     const pages = ['home','port','price','contact'];
 
     function go(id, linkEl) {
+      cutFlash(); // 1-frame black "film splice" between pages
       pages.forEach(p => { const el = document.getElementById('pg-'+p); el && el.classList.remove('on'); });
       const target = document.getElementById('pg-'+id);
       if (target) target.classList.add('on');
@@ -1860,10 +2138,432 @@ function filt(cat, tab) {
     _spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
     document.head.appendChild(_spinStyle);
 
+    /* ──────────────────────────────────────────────────────────
+       3D TILT CARDS — cards rotate toward the cursor with a
+       moving light glare. Desktop (fine pointer) only.
+    ────────────────────────────────────────────────────────── */
+    function bindTilt() {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+
+      document.querySelectorAll('.niche-card, .price-card, .v-card').forEach(card => {
+        if (card.dataset.tiltBound) return;
+        card.dataset.tiltBound = '1';
+        card.classList.add('tilt-card');
+
+        const glare = document.createElement('div');
+        glare.className = 'tilt-glare';
+        card.appendChild(glare);
+
+        let rect = null, raf = null, lastE = null;
+
+        card.addEventListener('mouseenter', () => { rect = card.getBoundingClientRect(); });
+
+        card.addEventListener('mousemove', e => {
+          lastE = e;
+          if (raf) return;
+          raf = requestAnimationFrame(() => {
+            raf = null;
+            if (!rect) rect = card.getBoundingClientRect();
+            const px = (lastE.clientX - rect.left) / rect.width;
+            const py = (lastE.clientY - rect.top)  / rect.height;
+            const rx = (0.5 - py) * 8;   // tilt up/down
+            const ry = (px - 0.5) * 10;  // tilt left/right
+            card.style.transform =
+              `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-6px) scale3d(1.015,1.015,1.015)`;
+            glare.style.opacity = '1';
+            glare.style.background =
+              `radial-gradient(circle at ${(px*100).toFixed(1)}% ${(py*100).toFixed(1)}%, rgba(255,255,255,0.09), transparent 60%)`;
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+          rect = null;
+          card.style.transform = '';
+          glare.style.opacity = '0';
+        });
+      });
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       HERO BLOB PARALLAX — glow blobs drift opposite the cursor
+    ────────────────────────────────────────────────────────── */
+    function bindBlobParallax() {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      const b1 = document.querySelector('.blob-1');
+      const b2 = document.querySelector('.blob-2');
+      if (!b1 || !b2) return;
+
+      document.addEventListener('mousemove', e => {
+        const nx = e.clientX / window.innerWidth  - 0.5;
+        const ny = e.clientY / window.innerHeight - 0.5;
+        b1.style.transform = `translate(${nx * 40}px, ${ny * 30}px)`;
+        b2.style.transform = `translate(${nx * -30}px, ${ny * -22}px)`;
+      });
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       FILM-CUT PAGE TRANSITION — 1-frame black splice
+    ────────────────────────────────────────────────────────── */
+    function cutFlash() {
+      const fx = document.getElementById('cutfx');
+      if (!fx || !document.body.classList.contains('played')) return;
+      fx.classList.remove('go');
+      void fx.offsetWidth; // restart animation
+      fx.classList.add('go');
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       TIMECODE UTILITY — HH:MM:SS:FF @ 24fps
+    ────────────────────────────────────────────────────────── */
+    function toTC(sec) {
+      const pad = n => String(n).padStart(2, '0');
+      const f = Math.floor((sec % 1) * 24);
+      const s = Math.floor(sec) % 60;
+      const m = Math.floor(sec / 60) % 60;
+      const h = Math.floor(sec / 3600);
+      return pad(h) + ':' + pad(m) + ':' + pad(s) + ':' + pad(f);
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       CAMERA HUD — live running timecode in the hero
+    ────────────────────────────────────────────────────────── */
+    function startHud() {
+      const tc = document.getElementById('hud-tc');
+      if (!tc) return;
+      const t0 = performance.now();
+      setInterval(() => {
+        if (document.hidden) return;
+        tc.textContent = toTC((performance.now() - t0) / 1000);
+      }, 42);
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       CINEMATIC INTRO — universal film leader countdown.
+       Plays once per browser session; click skips; reduced
+       motion gets a straight cut to the page.
+    ────────────────────────────────────────────────────────── */
+    function runIntro() {
+      const el = document.getElementById('intro');
+      if (!el) { document.body.classList.add('played'); return; }
+
+      let seen = false;
+      try { seen = sessionStorage.getItem('nrIntroPlayed') === '1'; } catch (e) {}
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let finished = false;
+      const finish = (instant) => {
+        if (finished) return;
+        finished = true;
+        try { sessionStorage.setItem('nrIntroPlayed', '1'); } catch (e) {}
+        document.documentElement.classList.remove('intro-lock');
+        if (instant) {
+          document.body.classList.add('played');
+          setTimeout(runReveal, 60);
+          el.remove();
+          return;
+        }
+        el.classList.add('fading');
+        setTimeout(() => {
+          el.classList.add('open');             // letterbox bars peel away
+          document.body.classList.add('played'); // hero cuts fire as screen opens
+          setTimeout(runReveal, 50);
+          setTimeout(() => el.remove(), 1100);
+        }, 300);
+      };
+
+      if (seen || reduce) { finish(true); return; }
+
+      document.documentElement.classList.add('intro-lock');
+
+      const num = document.getElementById('ld-num');
+      const sweep = document.getElementById('ld-sweep');
+      const SEQ = ['3', '2', '1'];
+      const PER = 760; // ms per number
+
+      // Clock starts on the first *rendered* frame, so background
+      // tabs (where rAF is suspended) still get the full countdown
+      // once they become visible.
+      let start = null;
+
+      function frame(now) {
+        if (finished) return;
+        if (start === null) {
+          start = now;
+          // Hard failsafe: once visible, the intro can never outlive
+          // the countdown by more than a few seconds.
+          setTimeout(() => finish(false), PER * SEQ.length + 4000);
+        }
+        const t = now - start;
+        const idx = Math.floor(t / PER);
+        if (idx >= SEQ.length) {
+          el.classList.add('flash');
+          setTimeout(() => finish(false), 150);
+          return;
+        }
+        num.textContent = SEQ[idx];
+        const a = (t % PER) / PER * Math.PI * 2; // radar sweep angle
+        const x = 100 + 78 * Math.sin(a);
+        const y = 100 - 78 * Math.cos(a);
+        const large = a > Math.PI ? 1 : 0;
+        sweep.setAttribute('d', `M100,100 L100,22 A78,78 0 ${large} 1 ${x.toFixed(2)},${y.toFixed(2)} Z`);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+
+      el.addEventListener('pointerdown', () => finish(false), { once: true });
+    }
+
     /* INIT */
     document.addEventListener('DOMContentLoaded', ()=>{
       runReveal(); bindMag(); bindVidHover();
+      bindTilt(); bindBlobParallax();
+      startHud(); runIntro();
     });
+  </script>
+
+  <!-- ==========================================================
+       3D INTERACTIVE BACKGROUND — Three.js
+       • Particle wave floor that ripples under the cursor
+       • Floating wireframe shapes + spinning film reel
+       • Whole-scene rotation with mouse, camera dive + dutch
+         roll on scroll
+       • Auto-degrades: fewer particles on mobile, static frame
+         for reduced-motion users, pauses when tab is hidden
+  ========================================================== -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    (function init3D() {
+      const canvas = document.getElementById('bg3d');
+      if (!canvas) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer  = window.matchMedia('(pointer: fine)').matches;
+      const small        = window.innerWidth < 768;
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas, antialias: !small, alpha: true, powerPreference: 'high-performance'
+        });
+      } catch (err) {
+        canvas.style.display = 'none'; // no WebGL — CSS background stays
+        return;
+      }
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 1.75));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x070709, 0.036);
+
+      const CAM_Y = 2.4;
+      const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 120);
+      camera.position.set(0, CAM_Y, 13);
+
+      /* ── Particle wave floor ─────────────────────────────── */
+      const COLS = small ? 64 : 150;
+      const ROWS = small ? 32 : 72;
+      const FIELD_W = 72, FIELD_D = 34, FIELD_Z = -8;
+      const COUNT = COLS * ROWS;
+
+      const positions = new Float32Array(COUNT * 3);
+      const colors    = new Float32Array(COUNT * 3);
+      const lime = new THREE.Color(0xBAFF29);
+      const dust = new THREE.Color(0x4a4a58);
+
+      let p = 0;
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          positions[p]     = (c / (COLS - 1) - 0.5) * FIELD_W;
+          positions[p + 1] = 0;
+          positions[p + 2] = (r / (ROWS - 1) - 0.5) * FIELD_D + FIELD_Z;
+          const tone = Math.random() < 0.15 ? lime : dust;
+          colors[p] = tone.r; colors[p + 1] = tone.g; colors[p + 2] = tone.b;
+          p += 3;
+        }
+      }
+
+      const waveGeo = new THREE.BufferGeometry();
+      waveGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      waveGeo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+
+      const wave = new THREE.Points(waveGeo, new THREE.PointsMaterial({
+        size: 0.07, vertexColors: true, transparent: true, opacity: 0.9,
+        blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+      }));
+      wave.position.y = -2.6;
+      scene.add(wave);
+
+      /* ── Floating wireframe shapes ───────────────────────── */
+      const shapes = new THREE.Group();
+      const defs = [
+        { geo: new THREE.IcosahedronGeometry(1.5, 0),     pos: [-8.5, 4.6, -6],  color: 0xBAFF29, op: 0.5,  spin: 0.22 },
+        { geo: new THREE.OctahedronGeometry(1.1, 0),      pos: [ 7.5, 5.6, -7],  color: 0xffffff, op: 0.18, spin: 0.30 },
+        { geo: new THREE.IcosahedronGeometry(0.65, 0),    pos: [-6.8, 1.2, -2],  color: 0xffffff, op: 0.26, spin: 0.42 },
+        { geo: new THREE.BoxGeometry(1.5, 1.5, 1.5),      pos: [ 3.2, 7.2, -10], color: 0xffffff, op: 0.14, spin: 0.26 }
+      ];
+      const spinners = defs.map((d, i) => {
+        const line = new THREE.LineSegments(
+          new THREE.EdgesGeometry(d.geo),
+          new THREE.LineBasicMaterial({ color: d.color, transparent: true, opacity: d.op })
+        );
+        line.position.set(d.pos[0], d.pos[1], d.pos[2]);
+        shapes.add(line);
+        return { line, baseY: d.pos[1], spin: d.spin, phase: i * 1.7 };
+      });
+      scene.add(shapes);
+
+      /* ── Spinning film reel (wireframe) ──────────────────── */
+      function circleLine(radius, color, opacity, segments = 72) {
+        const pts = [];
+        for (let i = 0; i < segments; i++) {
+          const a = i / segments * Math.PI * 2;
+          pts.push(new THREE.Vector3(Math.cos(a) * radius, Math.sin(a) * radius, 0));
+        }
+        const geo = new THREE.BufferGeometry().setFromPoints(pts);
+        return new THREE.LineLoop(geo, new THREE.LineBasicMaterial({ color, transparent: true, opacity }));
+      }
+
+      const reel = new THREE.Group();
+      reel.add(circleLine(2.3,  0xBAFF29, 0.42));
+      reel.add(circleLine(2.06, 0xBAFF29, 0.2));
+      reel.add(circleLine(0.5,  0xBAFF29, 0.42));
+      const spokes = [];
+      for (let i = 0; i < 6; i++) {
+        const a = i / 6 * Math.PI * 2;
+        spokes.push(Math.cos(a) * 0.5,  Math.sin(a) * 0.5,  0,
+                    Math.cos(a) * 2.06, Math.sin(a) * 2.06, 0);
+      }
+      const spokeGeo = new THREE.BufferGeometry();
+      spokeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(spokes), 3));
+      reel.add(new THREE.LineSegments(spokeGeo,
+        new THREE.LineBasicMaterial({ color: 0xBAFF29, transparent: true, opacity: 0.3 })));
+      reel.position.set(8.6, 3.2, -6.5);
+      reel.rotation.y = -0.45; // angled toward camera
+      scene.add(reel);
+
+      /* ── Pointer → camera parallax + wave ripple ─────────── */
+      const mouse  = { x: 0, y: 0, tx: 0, ty: 0 };
+      const ripple = { x: 0, z: FIELD_Z, tx: 0, tz: FIELD_Z, on: false };
+      const ray    = new THREE.Raycaster();
+      const ndc    = new THREE.Vector2();
+      const ground = new THREE.Plane(new THREE.Vector3(0, 1, 0), 2.6); // y = -2.6
+      const hit    = new THREE.Vector3();
+
+      if (finePointer) {
+        window.addEventListener('pointermove', e => {
+          mouse.tx =  (e.clientX / window.innerWidth)  * 2 - 1;
+          mouse.ty = -(e.clientY / window.innerHeight) * 2 + 1;
+          ndc.set(mouse.tx, mouse.ty);
+          ray.setFromCamera(ndc, camera);
+          if (ray.ray.intersectPlane(ground, hit)) {
+            ripple.tx = THREE.MathUtils.clamp(hit.x, -FIELD_W / 2, FIELD_W / 2);
+            ripple.tz = THREE.MathUtils.clamp(hit.z, FIELD_Z - FIELD_D / 2, FIELD_Z + FIELD_D / 2);
+            ripple.on = true;
+          }
+        }, { passive: true });
+      }
+
+      let scrollY = 0;
+      window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      /* ── Animation loop ──────────────────────────────────── */
+      const wavePos = waveGeo.attributes.position.array;
+
+      function updateWave(t) {
+        for (let i = 0; i < COUNT; i++) {
+          const j = i * 3;
+          const x = wavePos[j], z = wavePos[j + 2];
+          let y = Math.sin(x * 0.25 + t * 0.7)  * 0.42
+                + Math.cos(z * 0.32 + t * 0.55) * 0.34;
+          if (ripple.on) {
+            const dx = x - ripple.x, dz = z - ripple.z;
+            const d2 = dx * dx + dz * dz;
+            if (d2 < 110) {
+              const d = Math.sqrt(d2);
+              y += Math.sin(d * 1.5 - t * 4.2) * Math.exp(-d * 0.3) * 1.15;
+            }
+          }
+          wavePos[j + 1] = y;
+        }
+        waveGeo.attributes.position.needsUpdate = true;
+      }
+
+      const clock = new THREE.Clock();
+      const FRAME_MIN = small ? 0.031 : 0; // ~30fps cap on phones — saves battery
+      let lastT = 0;
+      let running = !document.hidden;
+
+      function tick() {
+        if (!running) return;
+        requestAnimationFrame(tick);
+
+        const t = clock.getElapsedTime();
+        if (t - lastT < FRAME_MIN) return;
+        const dt = Math.min(t - lastT, 0.05);
+        lastT = t;
+
+        // Eased pointer follow
+        mouse.x  += (mouse.tx - mouse.x) * 0.045;
+        mouse.y  += (mouse.ty - mouse.y) * 0.045;
+        ripple.x += (ripple.tx - ripple.x) * 0.08;
+        ripple.z += (ripple.tz - ripple.z) * 0.08;
+
+        // Whole scene rotates subtly with the mouse — strong 3D cue
+        scene.rotation.y = -mouse.x * 0.05;
+
+        // Camera: parallax + scroll dive + cinematic dutch roll
+        const dive = Math.min(scrollY * 0.0011, 3.2);
+        camera.position.x = mouse.x * 1.6;
+        camera.position.y = CAM_Y + mouse.y * 0.7 - dive;
+        camera.lookAt(0, 0.6, 0);
+        camera.rotation.z += Math.min(scrollY * 0.00002, 0.05);
+
+        // Shapes: slow spin + bob
+        for (const s of spinners) {
+          s.line.rotation.x += s.spin * dt * 0.9;
+          s.line.rotation.y += s.spin * dt * 0.6;
+          s.line.position.y  = s.baseY + Math.sin(t * 0.7 + s.phase) * 0.35;
+        }
+
+        // Film reel: steady projector spin + gentle bob
+        reel.rotation.z -= dt * 0.55;
+        reel.position.y  = 3.2 + Math.sin(t * 0.5) * 0.3;
+
+        updateWave(t);
+        renderer.render(scene, camera);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        const wasRunning = running;
+        running = !document.hidden && !reduceMotion;
+        if (running && !wasRunning) { lastT = clock.getElapsedTime(); tick(); }
+      });
+
+      if (reduceMotion) {
+        running = false;
+        updateWave(0.001);          // single static frame
+        renderer.render(scene, camera);
+      } else {
+        tick();
+      }
+    })();
   </script>
 </body>
 </html>
