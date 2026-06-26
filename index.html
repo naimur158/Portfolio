@@ -9,11 +9,32 @@
   <meta name="keywords" content="nrcreation, nr creation, video editor, cinematic video editing, portfolio, creative video agency" />
   <meta name="author" content="NR Creation" />
   <meta name="google-site-verification" content="9pTXFO7sLPJ23w-76_JXymDGDYPJSphtA8Tu3tXhm7M" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nrcreation.online/" />
+
+  <!-- ═══ OPEN GRAPH (Facebook, Discord, LinkedIn, WhatsApp…) ═══ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nrcreation.online/" />
+  <meta property="og:site_name" content="NR Creation" />
+  <meta property="og:title" content="NR Creation — Premium Video Editing for YouTube & Brands" />
+  <meta property="og:description" content="We transform raw footage into high-retention cinematic stories for YouTube automation channels, documentaries, and brands. 200+ projects delivered, 50M+ views generated." />
+  <meta property="og:image" content="https://nrcreation.online/og-image.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:image:alt" content="NR Creation — Let's Build Your Empire" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- ═══ TWITTER / X CARD ═══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NR Creation — Premium Video Editing for YouTube & Brands" />
+  <meta name="twitter:description" content="We transform raw footage into high-retention cinematic stories for YouTube automation channels, documentaries, and brands. 200+ projects delivered, 50M+ views generated." />
+  <meta name="twitter:image" content="https://nrcreation.online/og-image.png" />
 
   <!-- ═══ FAVICON — NR Creation logomark (SVG) ═══ -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38' fill='none'%3E%3Crect width='38' height='38' rx='9' fill='%23070709'/%3E%3Crect x='0.6' y='0.6' width='36.8' height='36.8' rx='9' fill='none' stroke='%23BAFF29' stroke-width='1.4'/%3E%3Crect x='3.5' y='3.5' width='2.8' height='2.8' rx='0.7' fill='%23BAFF29'/%3E%3Crect x='31.7' y='3.5' width='2.8' height='2.8' rx='0.7' fill='%23BAFF29'/%3E%3Crect x='3.5' y='31.7' width='2.8' height='2.8' rx='0.7' fill='%23BAFF29'/%3E%3Crect x='31.7' y='31.7' width='2.8' height='2.8' rx='0.7' fill='%23BAFF29'/%3E%3Cpath d='M8.5 29.5L8.5 9.5L19.5 29.5L19.5 9.5' stroke='%23EDEDED' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='24' y1='9.5' x2='24' y2='29.5' stroke='%23EDEDED' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M24 9.5L28.5 9.5Q34 9.5 34 15.5Q34 21.5 28.5 21.5L24 21.5' stroke='%23EDEDED' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M28 21.5L34.5 29.5' stroke='%23EDEDED' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='1' y1='37' x2='37' y2='1' stroke='%23BAFF29' stroke-width='1.6' stroke-linecap='round' opacity='0.65'/%3E%3C/svg%3E">
-  <!-- Fallback PNG favicon — add /favicon.png to your repo root for older browsers -->
+  <!-- Fallback PNG favicon + Apple touch icon (NR Creation logomark) -->
   <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -434,6 +455,37 @@
     .btn-price-s:hover { background:var(--surface-h);border-color:rgba(255,255,255,0.22); }
 
     /* ================================================
+       FAQ (PRICING PAGE)
+    ================================================ */
+    .faq-list { display:flex;flex-direction:column;gap:0.75rem;max-width:760px; }
+    .faq-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r-card); overflow: hidden;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .faq-item[open] { border-color: rgba(186,255,41,0.25); background: var(--bg-3); }
+    .faq-item summary {
+      list-style: none; cursor: none; gap: 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem;
+      color: var(--text);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+'; flex-shrink: 0; width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; border: 1px solid var(--border-b);
+      font-family: 'Syne', sans-serif; font-size: 1rem; line-height: 1; color: var(--text-m);
+      transition: transform 0.3s, color 0.25s, border-color 0.25s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); color: #070709; background: var(--accent); border-color: var(--accent); }
+    .faq-a {
+      padding: 0 1.5rem 1.375rem; font-size: 0.875rem;
+      color: var(--text-m); line-height: 1.75; max-width: 620px;
+    }
+
+    /* ================================================
        CONTACT
     ================================================ */
     .contact-pg { padding: 120px 0 80px; }
@@ -777,6 +829,106 @@
       #foot { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STRUCTURED DATA (JSON-LD) — helps Google show rich results
+       (FAQ dropdowns, business info) and gives AI assistants like
+       ChatGPT, Gemini, Claude and Perplexity a clean, structured
+       summary of who NR Creation is, what it offers, and pricing.
+       Once your Fiverr/Upwork profiles are live, add their URLs
+       to the "sameAs" array below.
+  ═══════════════════════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://nrcreation.online/#business",
+        "name": "NR Creation",
+        "url": "https://nrcreation.online/",
+        "image": "https://nrcreation.online/og-image.png",
+        "logo": "https://nrcreation.online/favicon.png",
+        "description": "NR Creation is a video editing studio that transforms raw footage into high-retention cinematic stories for YouTube automation channels, documentaries, and brands — covering true crime, finance, history, military, sports, tech & AI, and travel content.",
+        "email": "nr.creation.studio@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chittagong",
+          "addressCountry": "BD"
+        },
+        "areaServed": "Worldwide",
+        "sameAs": [
+          "https://x.com/NR_Creation_",
+          "https://www.youtube.com/@nrcreation.online",
+          "https://www.reddit.com/user/Parking_Finance2557/"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://nrcreation.online/#service",
+        "name": "Video Editing for YouTube & Brands",
+        "serviceType": "Video Editing",
+        "provider": { "@id": "https://nrcreation.online/#business" },
+        "areaServed": "Worldwide",
+        "description": "Cinematic video editing, motion graphics, AI voice-over, scriptwriting and SEO optimization for YouTube automation channels, documentaries, true crime, finance, sports, tech and travel content."
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://nrcreation.online/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How fast is the turnaround time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most videos are delivered within 2 to 5 days depending on length and complexity. Rush delivery is available on request — just mention your deadline when you reach out."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many revisions do I get?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every project includes multiple rounds of revisions until you're fully happy with the final edit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What file formats do you accept and deliver?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Send raw footage via Google Drive, Dropbox, or WeTransfer in any common format (MP4, MOV, ProRes, AVI). Final videos are delivered as MP4 (H.264) in 1080p or 4K, plus vertical 9:16 versions for Shorts and Reels on request."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you write the script or just edit existing footage?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Both. I can edit your existing footage and script, or handle full script writing and AI voice-over so you only need to hand over a topic or outline."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who owns the final video?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You do. Full ownership and commercial usage rights transfer to you once final payment is made — no royalties, no restrictions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do we communicate during the project?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Email, WhatsApp, or Discord — whichever you prefer. Expect replies within 1 hour during active projects and a progress update before each delivery."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -895,7 +1047,6 @@
     <ul class="nav-links" id="nl">
       <li><a href="#" class="on" onclick="go('home',this);return false;">Home</a></li>
       <li><a href="#"            onclick="go('port',this);return false;">Portfolio</a></li>
-      <li><a href="#"            onclick="go('price',this);return false;">Pricing</a></li>
       <li><a href="#"            onclick="go('contact',this);return false;">Contact</a></li>
     </ul>
 
@@ -1641,100 +1792,7 @@
     </div>
   </div><!-- END PORTFOLIO -->
 
-  <!-- ==========================================================
-       PAGE: PRICING
-  ========================================================== -->
-  <div id="pg-price" class="pg">
-    <div class="wrap price-pg">
-
-      <div class="rv" style="margin-bottom:3.5rem;text-align:center;">
-        <span class="label">Transparent Pricing</span>
-        <h2 class="section-h" style="margin-top:0.7rem;">Simple, <span class="accent-t">Clear</span> Rates</h2>
-        <p class="muted-t" style="margin-top:0.75rem;font-size:0.9rem;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.7;">
-          Choose the package that fits your content goals. No hidden fees, no surprises.
-        </p>
-      </div>
-
-      <div class="price-grid rv d1">
-
-        <!-- BASIC STARTER -->
-        <div class="price-card">
-          <div class="price-tier">Basic Starter</div>
-          <div class="price-amt"><sup>$</sup>30</div>
-          <div style="font-size:0.78rem;color:var(--accent);font-weight:600;margin-bottom:0.2rem;letter-spacing:0.06em;">/Video</div>
-          <div class="price-note">Great for new creators getting started with YouTube automation.</div>
-          <hr class="price-hr">
-          <ul class="price-ul">
-            <li><span class="ck">✓</span> Basic edit (cut, transition, captions)</li>
-            <li><span class="ck">✓</span> 2 revisions</li>
-            <li><span class="ck">✓</span> Video Duration: 8–10 min</li>
-            <li><span class="ck">✓</span> Delivery Time: 2 days</li>
-            <li><span class="xx">✗</span> Script writing</li>
-            <li><span class="xx">✗</span> AI Voice-over</li>
-            <li><span class="xx">✗</span> Motion Graphics</li>
-            <li><span class="xx">✗</span> Shorts / Reels</li>
-          </ul>
-          <button class="btn-price-s mag" onclick="go('contact',null)">Get Started</button>
-        </div>
-
-        <!-- GROWTH PACK (Most Popular) -->
-        <div class="price-card hot">
-          <div class="hot-badge">⚡ Most Popular</div>
-          <div class="price-tier">Growth Pack</div>
-          <div class="price-amt"><sup>$</sup>50</div>
-          <div style="font-size:0.78rem;color:var(--accent);font-weight:600;margin-bottom:0.2rem;letter-spacing:0.06em;">/Video</div>
-          <div class="price-note">Everything you need to run a serious YouTube automation channel.</div>
-          <hr class="price-hr">
-          <ul class="price-ul">
-            <li><span class="ck">✓</span> Script writing</li>
-            <li><span class="ck">✓</span> AI Voice-over</li>
-            <li><span class="ck">✓</span> Motion Graphics (text/shape animation)</li>
-            <li><span class="ck">✓</span> 1 Shorts / Reels included</li>
-            <li><span class="ck">✓</span> Unlimited revisions</li>
-            <li><span class="ck">✓</span> Video Duration: 8–10 min</li>
-            <li><span class="ck">✓</span> Delivery Time: 3 days</li>
-            <li><span class="xx">✗</span> SEO optimization</li>
-          </ul>
-          <button class="btn-price-p mag" onclick="go('contact',null)">Get Started</button>
-        </div>
-
-        <!-- PREMIUM -->
-        <div class="price-card">
-          <div class="price-tier">Premium</div>
-          <div class="price-amt"><sup>$</sup>80</div>
-          <div style="font-size:0.78rem;color:var(--accent);font-weight:600;margin-bottom:0.2rem;letter-spacing:0.06em;">/Video</div>
-          <div class="price-note">The full-stack package for scaling automation channels to 6 figures.</div>
-          <hr class="price-hr">
-          <ul class="price-ul">
-            <li><span class="ck">✓</span> Script writing</li>
-            <li><span class="ck">✓</span> AI Voice-over</li>
-            <li><span class="ck">✓</span> SEO optimization</li>
-            <li><span class="ck">✓</span> Full Motion Graphics (logo/text animation, transitions)</li>
-            <li><span class="ck">✓</span> 1 Custom Thumbnail</li>
-            <li><span class="ck">✓</span> 1 Shorts / Reels included</li>
-            <li><span class="ck">✓</span> Unlimited revisions</li>
-            <li><span class="ck">✓</span> Video Duration: 8–10 min</li>
-            <li><span class="ck">✓</span> Delivery Time: 5 days</li>
-          </ul>
-          <button class="btn-price-s mag" onclick="go('contact',null)">Get Started</button>
-        </div>
-
-      </div>
-
-      <div class="rv d2" style="margin-top:2.5rem;padding:2.75rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;text-align:center;">
-        <span class="label">Custom Project?</span>
-        <h3 style="font-size:1.4rem;font-weight:700;margin:0.7rem 0 0.5rem;">Need something more specific?</h3>
-        <p class="muted-t" style="font-size:0.875rem;max-width:380px;margin:0 auto 1.5rem;line-height:1.7;">
-          Every project is unique. Let's talk through your needs and build a tailored package.
-        </p>
-        <a href="#" class="btn-p mag" onclick="go('contact',null);return false;">
-          Let's Build Something
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-    </div>
-  </div><!-- END PRICING -->
+  <!-- (Pricing page removed per request) -->
 
   <!-- ==========================================================
        PAGE: CONTACT
@@ -1768,7 +1826,7 @@
 
           <div class="testi-card">
             <div class="testi-stars">★★★★★</div>
-            <div class="testi-q">"Ordered the Growth Pack and it was worth every penny. The AI voiceover sync was flawless — I've tried 5 other editors before and none came close. Videos are now hitting 60%+ retention consistently. NR Creation is the real deal."</div>
+            <div class="testi-q">"Ordered the full package and it was worth every penny. The AI voiceover sync was flawless — I've tried 5 other editors before and none came close. Videos are now hitting 60%+ retention consistently. NR Creation is the real deal."</div>
             <div class="testi-by">
               <div class="testi-av" style="background:#6C63FF;">KA</div>
               <div><div class="testi-name">Karim A.</div><div class="testi-role">Faceless Mystery Channel &middot; 28K Subscribers</div></div>
@@ -1864,10 +1922,11 @@
             <div class="f-field">
               <select id="f-budget" onchange="this.classList.add('filled')">
                 <option value="" disabled selected></option>
-                <option>Basic Starter — $30/Video</option>
-                <option>Growth Pack — $50/Video</option>
-                <option>Premium — $80/Video</option>
-                <option>Custom / Let's Discuss</option>
+                <option>Under $50</option>
+                <option>$50 – $150</option>
+                <option>$150 – $300</option>
+                <option>$300+</option>
+                <option>Let's Discuss</option>
               </select>
               <label class="f-lbl" for="f-budget">Project Budget</label>
             </div>
@@ -1920,6 +1979,40 @@
         </div>
       </div>
 
+      <!-- ── FAQ ── -->
+      <div class="rv" style="margin-top:5rem;margin-bottom:2rem;">
+        <div class="sec-line"></div>
+        <span class="label">Questions?</span>
+        <h2 class="section-h" style="margin-top:0.7rem;">Frequently Asked <span class="accent-t">Questions</span></h2>
+      </div>
+
+      <div class="faq-list rv d1">
+        <details class="faq-item">
+          <summary>How fast is the turnaround time?</summary>
+          <div class="faq-a">Most videos are delivered within 2 to 5 days depending on length and complexity. Rush delivery is available on request — just mention your deadline when you reach out.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How many revisions do I get?</summary>
+          <div class="faq-a">Every project includes multiple rounds of revisions until you're fully happy with the final edit.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What file formats do you accept and deliver?</summary>
+          <div class="faq-a">Send raw footage via Google Drive, Dropbox, or WeTransfer in any common format (MP4, MOV, ProRes, AVI). Final videos are delivered as MP4 (H.264) in 1080p or 4K, plus vertical 9:16 versions for Shorts and Reels on request.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do you write the script or just edit existing footage?</summary>
+          <div class="faq-a">Both. I can edit your existing footage and script, or handle full script writing and AI voice-over so you only need to hand over a topic or outline.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Who owns the final video?</summary>
+          <div class="faq-a">You do. Full ownership and commercial usage rights transfer to you once final payment is made — no royalties, no restrictions.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How do we communicate during the project?</summary>
+          <div class="faq-a">Email, WhatsApp, or Discord — whichever you prefer. Expect replies within 1 hour during active projects and a progress update before each delivery.</div>
+        </details>
+      </div>
+
     </div>
   </div><!-- END CONTACT -->
 
@@ -1929,7 +2022,6 @@
     <div class="foot-ls">
       <a href="#" onclick="go('home',null);return false;">Home</a>
       <a href="#" onclick="go('port',null);return false;">Work</a>
-      <a href="#" onclick="go('price',null);return false;">Pricing</a>
       <a href="#" onclick="go('contact',null);return false;">Contact</a>
     </div>
   </footer>
@@ -1938,7 +2030,7 @@
        JAVASCRIPT
   ========================================================== -->
   <script>
-    const pages = ['home','port','price','contact'];
+    const pages = ['home','port','contact'];
 
     function go(id, linkEl) {
       cutFlash(); // 1-frame black "film splice" between pages
@@ -1976,13 +2068,13 @@
       requestAnimationFrame(animRing);
     })();
     document.addEventListener('mouseover', e => {
-      if (e.target.closest('a,button,.f-tab,.niche-card,.price-card')) {
+      if (e.target.closest('a,button,.f-tab,.niche-card,.price-card,summary')) {
         document.body.classList.add('link-hover');
         cDot.style.transform='translate(-50%,-50%) scale(2.5)';
       }
     });
     document.addEventListener('mouseout', e => {
-      if (e.target.closest('a,button,.f-tab,.niche-card,.price-card')) {
+      if (e.target.closest('a,button,.f-tab,.niche-card,.price-card,summary')) {
         document.body.classList.remove('link-hover');
         cDot.style.transform='translate(-50%,-50%) scale(1)';
       }
